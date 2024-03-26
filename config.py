@@ -13,7 +13,8 @@ class Config:
                 "ACCESS_TOKEN_SECRET",
             ]
 
-        self.secrets = secrets
+        self.secrets_list = secrets
+        self.secrets: dict[str, str] = {}
         self.__get_secrets()
 
     def __get_secrets(self):
@@ -21,8 +22,10 @@ class Config:
             raise EnvironmentError(f"./.env.local file doesn't exist!")
         load_dotenv(".env.local")
 
-        for secret in self.secrets:
+        for secret in self.secrets_list:
             env_variable = os.environ.get(secret)
 
             if env_variable is None:
                 raise EnvironmentError(f"Environment variable '{secret}' isn't set!")
+
+            self.secrets[secret] = env_variable
