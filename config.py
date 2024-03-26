@@ -1,5 +1,6 @@
 from typing import List
 import os
+from dotenv import load_dotenv
 
 
 class Config:
@@ -16,6 +17,10 @@ class Config:
         self.__get_secrets()
 
     def __get_secrets(self):
+        if not os.path.exists(".env.local"):
+            raise EnvironmentError(f"./.env.local file doesn't exist!")
+        load_dotenv(".env.local")
+
         for secret in self.secrets:
             env_variable = os.environ.get(secret)
 
