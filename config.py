@@ -20,4 +20,4 @@ class Config:
             env_variable = os.environ.get(secret)
 
             if env_variable is None:
-                raise EnvironmentError(f"Environment variable '{secret}' not set!")
+                raise EnvironmentError(f"Environment variable '{secret}' isn't set!")
