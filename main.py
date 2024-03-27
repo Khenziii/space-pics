@@ -29,8 +29,8 @@ def post_tweet():
     data = nasa_client.get_pictures(from_when, thumbs, download_image)
 
     image_description = data["title"]
-    media = twitter_api.media_upload("image.png")
-    os.remove("image.png")
+    media = twitter_api.media_upload("/tmp/image.png")
+    os.remove("/tmp/image.png")
 
     tweet_content = f"{image_description}\n\n{from_when.strftime('%d/%m/%Y')}"
     twitter_client.create_tweet(text=tweet_content, media_ids=[media.media_id])

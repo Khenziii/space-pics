@@ -19,7 +19,7 @@ class NasaAPI:
 
             if download_image:
                 image = requests.get(json["url"])
-                with open("image.png", "wb") as f:
+                with open("/tmp/image.png", "wb") as f:
                     f.write(image.content)
 
             return json
