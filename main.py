@@ -21,14 +21,16 @@ twitter_client = tweepy.Client(**twitter_auth_dict)
 twitter_auth = tweepy.OAuth1UserHandler(**twitter_auth_dict)
 twitter_api = tweepy.API(auth=twitter_auth)
 
-from_when: date = date.today()
-thumbs: bool = True
-download_image: bool = True
-data = nasa_client.get_pictures(from_when, thumbs, download_image)
 
-image_description = data["title"]
-media = twitter_api.media_upload("image.png")
-os.remove("image.png")
+def post_tweet():
+    from_when: date = date.today()
+    thumbs: bool = True
+    download_image: bool = True
+    data = nasa_client.get_pictures(from_when, thumbs, download_image)
 
-tweet_content = f"{image_description}\n\n{from_when.strftime('%d/%m/%Y')}"
-twitter_client.create_tweet(text=tweet_content, media_ids=[media.media_id])
+    image_description = data["title"]
+    media = twitter_api.media_upload("image.png")
+    os.remove("image.png")
+
+    tweet_content = f"{image_description}\n\n{from_when.strftime('%d/%m/%Y')}"
+    twitter_client.create_tweet(text=tweet_content, media_ids=[media.media_id])
