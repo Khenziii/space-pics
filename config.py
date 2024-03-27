@@ -11,6 +11,7 @@ class Config:
                 "CONSUMER_SECRET_KEY",
                 "ACCESS_TOKEN",
                 "ACCESS_TOKEN_SECRET",
+                "NASA_API_DEMO_KEY",
             ]
 
         self.secrets_list = secrets
