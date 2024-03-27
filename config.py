@@ -20,7 +20,7 @@ class Config:
 
     def __get_secrets(self):
         if not os.path.exists(".env.local"):
-            raise EnvironmentError(f"./.env.local file doesn't exist!")
+            print("WARNING: ./.env.local file doesn't exist!")
         load_dotenv(".env.local")
 
         for secret in self.secrets_list:
