@@ -12,10 +12,10 @@ nasa_client = NasaAPI(
 )
 
 twitter_auth_dict = {
-    "consumer_key": secrets["CONSUMER_KEY"],
-    "consumer_secret": secrets["CONSUMER_SECRET_KEY"],
-    "access_token": secrets["ACCESS_TOKEN"],
-    "access_token_secret": secrets["ACCESS_TOKEN_SECRET"]
+    "consumer_key": secrets["TWITTER_CONSUMER_KEY"],
+    "consumer_secret": secrets["TWITTER_CONSUMER_SECRET_KEY"],
+    "access_token": secrets["TWITTER_ACCESS_TOKEN"],
+    "access_token_secret": secrets["TWITTER_ACCESS_TOKEN_SECRET"]
 }
 twitter_client = tweepy.Client(**twitter_auth_dict)
 twitter_auth = tweepy.OAuth1UserHandler(**twitter_auth_dict)

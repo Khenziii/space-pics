@@ -7,10 +7,10 @@ class Config:
     def __init__(self, secrets: List[str] = None):
         if secrets is None:
             secrets = [
-                "CONSUMER_KEY",
-                "CONSUMER_SECRET_KEY",
-                "ACCESS_TOKEN",
-                "ACCESS_TOKEN_SECRET",
+                "TWITTER_CONSUMER_KEY",
+                "TWITTER_CONSUMER_SECRET_KEY",
+                "TWITTER_ACCESS_TOKEN",
+                "TWITTER_ACCESS_TOKEN_SECRET",
                 "NASA_API_DEMO_KEY",
             ]
 
