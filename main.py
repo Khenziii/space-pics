@@ -1,7 +1,7 @@
 from config import Config
 from nasa import NasaAPI
 import tweepy
-from datetime import date
+from datetime import date, timedelta
 import os
 
 configManager = Config()
@@ -23,14 +23,16 @@ twitter_api = tweepy.API(auth=twitter_auth)
 
 
 def post_tweet():
-    from_when: date = date.today()
+    today: date = date.today()
+    yesterday: date = today - timedelta(days=1)
+
     thumbs: bool = True
     download_image: bool = True
-    data = nasa_client.get_pictures(from_when, thumbs, download_image)
+    data = nasa_client.get_pictures(yesterday, thumbs, download_image)
 
     image_description = data["title"]
     media = twitter_api.media_upload("/tmp/image.png")
     os.remove("/tmp/image.png")
 
-    tweet_content = f"{image_description}\n\n{from_when.strftime('%d/%m/%Y')}"
+    tweet_content = f"{image_description}\n\n{today.strftime('%d/%m/%Y')}"
     twitter_client.create_tweet(text=tweet_content, media_ids=[media.media_id])
