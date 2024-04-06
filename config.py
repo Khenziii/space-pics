@@ -12,6 +12,8 @@ class Config:
                 "TWITTER_ACCESS_TOKEN",
                 "TWITTER_ACCESS_TOKEN_SECRET",
                 "NASA_API_DEMO_KEY",
+                "AWS_ACCESS_KEY_ID",
+                "AWS_SECRET_ACCESS_KEY",
             ]
 
         self.secrets_list = secrets

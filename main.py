@@ -1,5 +1,6 @@
 from config import Config
 from nasa import NasaAPI
+from aws import AwsAPI
 import tweepy
 from datetime import date, timedelta
 import os
@@ -21,8 +22,13 @@ twitter_client = tweepy.Client(**twitter_auth_dict)
 twitter_auth = tweepy.OAuth1UserHandler(**twitter_auth_dict)
 twitter_api = tweepy.API(auth=twitter_auth)
 
+aws_api = AwsAPI(
+    access_key=secrets["AWS_ACCESS_KEY_ID"],
+    secret_key=secrets["AWS_SECRET_ACCESS_KEY"]
+)
 
-def post_tweet():
+
+def __post_tweet():
     today: date = date.today()
     yesterday: date = today - timedelta(days=1)
 
@@ -36,3 +42,11 @@ def post_tweet():
 
     tweet_content = f"{image_description}\n\n{today.strftime('%d/%m/%Y')}"
     twitter_client.create_tweet(text=tweet_content, media_ids=[media.media_id])
+
+
+def post_tweet():
+    if aws_api.check_if_ran_in_last_n_hours(23):
+        return
+
+    __post_tweet()
+    aws_api.write_execution_time_to_db()
