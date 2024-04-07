@@ -44,9 +44,10 @@ def __post_tweet():
     twitter_client.create_tweet(text=tweet_content, media_ids=[media.media_id])
 
 
-def post_tweet():
+def post_tweet() -> str:
     if aws_api.check_if_ran_in_last_n_hours(23):
-        return
+        return "Tweet wasn't created, as the function has already been executed today."
 
     __post_tweet()
     aws_api.write_execution_time_to_db()
+    return "Successfully created new tweet!"
