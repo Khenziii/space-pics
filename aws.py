@@ -20,6 +20,7 @@ class AwsAPI:
         current_time = time()
         item = {
             self.partition_key: int(current_time),
+            "expires-at": int(current_time) + 60 * 60 * 24 * 7,
         }
 
         response = self.db.Table(self.table_name).put_item(
