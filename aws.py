@@ -1,6 +1,5 @@
-from time import time
 import boto3
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 DYNAMO_TABLE_NAME = "space-pics"
 DYNAMO_PARTITION_KEY = "last-ran-at"
@@ -17,7 +16,7 @@ class AwsAPI:
 
     # writes time.time to db
     def write_execution_time_to_db(self):
-        current_time = time()
+        current_time = datetime.now(tz=timezone.utc).timestamp()
         item = {
             self.partition_key: int(current_time),
             "expires-at": int(current_time) + 60 * 60 * 24 * 7,
@@ -41,9 +40,8 @@ class AwsAPI:
         # (seconds since unix epoch, time.time())
         last_execution_time = item["last-ran-at"]
 
-        last_execution_time_date = datetime.utcfromtimestamp(int(last_execution_time))
-        current_time = datetime.utcnow()
-
+        last_execution_time_date = datetime.fromtimestamp(int(last_execution_time), tz=timezone.utc)
+        current_time = datetime.now(tz=timezone.utc)
         diff = current_time - last_execution_time_date
         if diff < timedelta(hours=hours):
             return True
