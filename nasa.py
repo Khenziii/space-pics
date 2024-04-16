@@ -18,7 +18,11 @@ class NasaAPI:
             json = response.json()
 
             if download_image:
-                image = requests.get(json["url"])
+                src = json["url"]
+                if json["media_type"] == "video":
+                    src = json["thumbnail_url"]
+
+                image = requests.get(src)
                 with open("/tmp/image.png", "wb") as f:
                     f.write(image.content)
 
