@@ -33,14 +33,12 @@ class AwsAPI:
         items = response["Items"]
         if len(items) < 1:
             return False
-        # by default, the largest int in
-        # results will be returned first
-        item = items[0]
+        last_ran_at_list = [int(item[DYNAMO_PARTITION_KEY]) for item in items]
         # dates are stored in timestamp format
         # (seconds since unix epoch, time.time())
-        last_execution_time = item["last-ran-at"]
+        last_ran_at = max(last_ran_at_list)
 
-        last_execution_time_date = datetime.fromtimestamp(int(last_execution_time), tz=timezone.utc)
+        last_execution_time_date = datetime.fromtimestamp(last_ran_at, tz=timezone.utc)
         current_time = datetime.now(tz=timezone.utc)
         diff = current_time - last_execution_time_date
         if diff < timedelta(hours=hours):
